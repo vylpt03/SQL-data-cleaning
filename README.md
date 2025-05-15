@@ -37,16 +37,32 @@ SELECT* FROM club_member_info;</pre>
 
 ## CLean the data
 **Some issues with data:**
-1. Inconsistent letter case 
-2. Leading and trailing whitespaces 
-3. Age out of realistic range
+1. Inconsistent letter case (full_name column).
+2. Leading and trailing whitespaces (full_name column).
+3. Age out of realistic range (age column).
 
 **Query**  
+#### 1. Inconsistent letter case  
+The use of uppercase and lowercase letters is not uniform.  
+![image](https://github.com/user-attachments/assets/bcc02f74-9897-4e79-ad3b-51a4d7d11690)  
+#### 2. Leading and trailing whitespaces
+The unnecessary blank spaces that appear before or after the content in a cell.  
+![image](https://github.com/user-attachments/assets/ce33c720-7456-4515-ac80-7b12e02205a4)
 
-To fix issues 1 and 2, I combine both UPPER and TRIM in a  UPDATE statement for 'full_name'
+To fix issues 1 and 2, I combine both UPPER and TRIM in a  UPDATE statement for 'full_name' to upper all the letters and delete the unnecessary blank in a cell.
   <pre>UPDATE club_member_info_cleaned
 SET full_name = UPPER(TRIM(full_name));</pre>
+![image](https://github.com/user-attachments/assets/f1a910c2-c453-46d9-8cc6-b3bc895c3388)
+> Result
 
-To fix issue 3, I use below query to delete age data which is bigger than 120  
+#### 3. Age out of realistic range.
+That the age mentioned is not believable—it's either too young or too old. I use the query below to check if the age is too young or too old.  
+
+ <pre>SELECT *
+FROM club_member_info cmi 
+WHERE age < 0 OR age > 120;</pre>  
+![image](https://github.com/user-attachments/assets/241494ed-03bb-4731-83f3-1bbeaaa20924)
+
+To fix issue 3, I use below query to delete age data which is bigger than 120.  
 <pre>DELETE FROM club_member_info_cleaned
 WHERE age > 120;</pre>
